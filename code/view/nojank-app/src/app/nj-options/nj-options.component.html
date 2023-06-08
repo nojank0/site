@@ -1,0 +1,49 @@
+<div>
+<app-nj-nav [nj_current_page]="nj_current_page"></app-nj-nav>
+</div>
+<div class="content">
+  <p>
+   <mat-slide-toggle [checked]="opStateService.isCtlPrinterTheme" (change)="onChangeCtlTheme($event.checked)">{{opThemeService.prtVwLabel}}</mat-slide-toggle>
+  </p>
+
+
+  <p>
+    Use this section to override the
+    <a mat-button color="primary" href="https://redis.com">Redis</a>
+    cache used by this site:
+  </p>
+
+
+  <p>
+   <mat-slide-toggle [checked]="opStateService.isCtlOverrideRedis" (change)="onChangeCtlOverrideRedis($event.checked)">{{opRedisService.redisCacheChoiceLabel}}</mat-slide-toggle>
+  </p>
+
+<p>
+  {{opRedisService.redisCacheInUseLabel}}.
+</p>
+
+ <form *ngIf="opStateService.isCtlOverrideRedis" [formGroup]="configForm" (submit)="submitConfigForm()">
+  <mat-form-field>
+    <mat-label>URL</mat-label>
+    <input matInput #redisUrl placeholder=""/>
+   </mat-form-field>
+  <br/>
+  <mat-form-field>
+    <mat-label>User</mat-label>
+    <input matInput #redisUsr placeholder=""/>
+   </mat-form-field>
+  <br/>
+  <mat-form-field>
+   <mat-label>Password</mat-label>
+   <input matInput #redisPwd placeholder=""/>
+  </mat-form-field>
+  <br/>
+  <button mat-button color="primary"
+  (click)="opRedisService.submitRedisForm(redisUrl.value, redisUsr.value, redisPwd.value)">OK</button>
+ </form>
+
+ <p>
+  As an additional precaution, you may choose to
+   <a mat-button color="primary" href="https://github.com/nojank0/site">mirror</a>
+ </p>
+</div>

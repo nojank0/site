@@ -1,0 +1,50 @@
+<app-nj-nav [nj_current_page]="nj_current_page"></app-nj-nav>
+<mat-tab-group>
+ <mat-tab label="About {{njtitle}}" color="accent">
+   <div class="content">
+<h1>No...</h1>
+  <ul><li>
+   ...public access,
+  </li><li>
+   advertising,
+  </li><li>
+   cookies,
+  </li><li>
+   or external analytics.
+  </li></ul>
+     <p>
+       {{njtitle}} is 
+       <a mat-button color="primary" href="https://github.com/nojank0/site">open source</a>, 
+       so feel free to create your own mirror if there are performance issues with this site.
+     </p>
+   </div>
+ </mat-tab>
+ <mat-tab label="History">
+   <div class="content">
+  <ul><li>
+    20220506 Customize Angular theme, create NoJank favicon.
+  </li><li>
+    20220429 Angular for the view... get some basic nav going.  Kotlin, springboot for the controller.
+  </li><li>
+    20220422 nojank.com registered.
+  </li></ul>
+   </div>
+ </mat-tab>
+ <mat-tab label="To Do">
+   <div class="content">
+     <ul><li>
+       Minimum viable product.
+       <ul><li>
+         Redis.
+       </li><li>
+         Organizer registration.
+       </li><li>
+         crud group members.
+       </li><li>
+         default group selection, if more than one.
+       </li>
+       </ul>
+     </li></ul>
+   </div>
+ </mat-tab>
+</mat-tab-group>

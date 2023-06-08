@@ -1,0 +1,10 @@
+{
+  "license": "MIT",
+  "dependencies": {
+    "@angular/animations": "^16.0.0",
+    "@angular/cli": "^16.0.0",
+    "@angular/material": "^16.0.0",
+    "source-map-explorer": "^2.5.3",
+    "typescript": "^5.0.4"
+  }
+}

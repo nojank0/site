@@ -1,0 +1,46 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+
+$nojank-app-primary: mat.define-palette(mat.$blue-palette);
+$nojank-app-accent: mat.define-palette(mat.$teal-palette);
+$nojank-app-warn: mat.define-palette(mat.$red-palette);
+
+$nojank-app-primary-dark: mat.define-palette(mat.$light-blue-palette);
+$nojank-app-accent-dark: mat.define-palette(mat.$teal-palette);
+$nojank-app-warn-dark: mat.define-palette(mat.$red-palette);
+
+$nojank-light-theme: mat.define-light-theme((
+  color: (
+    primary: $nojank-app-primary,
+    accent: $nojank-app-accent,
+    warn: $nojank-app-warn,
+  )
+));
+
+$nojank-dark-theme: mat.define-dark-theme((
+  color: (
+    primary: $nojank-app-primary-dark,
+    accent: $nojank-app-accent-dark,
+    warn: $nojank-app-warn-dark,
+  )
+));
+
+mat.$theme-ignore-duplication-warnings: true;
+ 
+.printMode {
+ @include mat.all-component-themes($nojank-light-theme);
+}
+
+.screenMode {
+ @include mat.all-component-themes($nojank-dark-theme);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+
+.content {
+  margin: 20px;
+}
