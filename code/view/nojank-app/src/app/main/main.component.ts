@@ -1,4 +1,5 @@
 import { Component, Input, ViewChild, AfterViewInit} from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 import { Inject }  from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { NjNavComponent } from '../nj-nav/nj-nav.component';
@@ -18,12 +19,18 @@ export class MainComponent implements AfterViewInit {
  njtitle = njg.title
  countDownsOutput = 'Loading countdown data...'
 
- constructor(@Inject(DOCUMENT) document: Document, @Inject(OpThemeService) private opThemeService: OpThemeService) {
+ constructor(@Inject(DOCUMENT) document: Document, 
+  @Inject(OpThemeService) private opThemeService: OpThemeService,
+  private domSanitizer: DomSanitizer) {
   opThemeService.updateTheme(document)
  }
 
  ngAfterViewInit() {
   this.updateCountdown()
+ }
+
+ getCountdowns(): SafeHtml {
+  return this.domSanitizer.bypassSecurityTrustHtml(this.countDownsOutput)
  }
 
  private yyyyMMddhh2date(nr: string): Date {
@@ -53,7 +60,7 @@ private updateCountdown() {
     } else {
      this.countDownsOutput += njg.countDowns[i][2]
     }
-    this.countDownsOutput += '\n'
+    this.countDownsOutput += '<br/>'
    }
   }
  }, 1000);
