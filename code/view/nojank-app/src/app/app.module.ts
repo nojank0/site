@@ -36,7 +36,7 @@ import { MainComponent } from './main/main.component';
    MatInputModule,
    MatFormFieldModule,
    BrowserModule,
-   HttpClientModule,//https://www.angularjswiki.com/httpclient/get/
+   HttpClientModule,
    RouterModule.forRoot([
         {path: '', component: MainComponent},
         {path: 'options', component: NjOptionsComponent},

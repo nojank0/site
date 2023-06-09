@@ -11,6 +11,7 @@ import { OpStateService } from '../op-state.service';
 //import { HttpClient } from '@angular/common/http';
 
 import * as njg from '../globals';
+import { OpHttpService } from '../op-http.service';
 
 @Component({
  selector: 'app-nj-config',
@@ -22,6 +23,7 @@ export class NjOptionsComponent {
  opStateService: OpStateService
  opThemeService: OpThemeService
  opRedisService: OpRedisService
+ opHttpService: OpHttpService
 
  configForm = new FormGroup({
   redisUrl: new FormControl(''),
@@ -33,10 +35,12 @@ export class NjOptionsComponent {
   @Inject(OpStateService) opStateService: OpStateService,
   @Inject(OpThemeService) opThemeService: OpThemeService,
   @Inject(OpRedisService) opRedisService: OpRedisService,
+  @Inject(OpHttpService) opHttpService: OpHttpService,
   private ref: ChangeDetectorRef ) {
    this.opStateService = opStateService
    this.opThemeService = opThemeService
    this.opRedisService = opRedisService
+   this.opHttpService = opHttpService
    opThemeService.updateTheme(document)
    this.ref.markForCheck();
  }
@@ -50,6 +54,7 @@ export class NjOptionsComponent {
  }
 
  submitConfigForm() {
+  this.opHttpService.getConfig()
   //HttpClient.get<RedisConfig>(njg.backEnd)
   //console.log(this.configForm.value.redisUrl)
  }
