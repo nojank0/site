@@ -32,10 +32,6 @@ tasks.withType(KotlinCompile).configureEach {
 	}
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
-
 // Name the final jar without the version.  https://stackoverflow.com/questions/53123012/spring-boot-2-change-jar-name.
 bootJar {
 	archiveFileName = "${archiveBaseName.get()}.jar"

@@ -43,6 +43,7 @@ export class NjOptionsComponent {
    this.opHttpService = opHttpService
    opThemeService.updateTheme(document)
    this.ref.markForCheck();
+   this.opHttpService.getConfig()
  }
 
  onChangeCtlTheme(value: boolean) {
@@ -54,7 +55,6 @@ export class NjOptionsComponent {
  }
 
  submitConfigForm() {
-  this.opHttpService.getConfig()
   //HttpClient.get<RedisConfig>(njg.backEnd)
   //console.log(this.configForm.value.redisUrl)
  }

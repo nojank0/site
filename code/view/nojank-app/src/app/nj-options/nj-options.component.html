@@ -13,6 +13,7 @@
     cache used by this site:
   </p>
 
+  <p>Your Session ID is <span [innerText]="opHttpService.boundConfig.ssn"></span></p>
 
   <p>
    <mat-slide-toggle [checked]="opStateService.isCtlOverrideRedis" (change)="onChangeCtlOverrideRedis($event.checked)">{{opRedisService.redisCacheChoiceLabel}}</mat-slide-toggle>

@@ -10,27 +10,27 @@ import { catchError, retry } from 'rxjs/operators';
 export class OpHttpService {
 
   configURL = "http://localhost:8080/getConfig"
+  boundConfig = <Config>{}
 
   constructor(private http: HttpClient) { }
 
   getConfig() {
     let options = {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+      headers: new HttpHeaders()
+      .set('Content-Type', 'application/x-www-form-urlencoded')
     };
 
     this.http.get<Config>(this.configURL, options)
     .subscribe(config => {
-        console.log(config.url + config.usr)
+        this.boundConfig = config
       }
     )
   }
-  
-  // this.$config = getConfig() {
-  //   return this.http.get<Config>("http://localhost:8080/getConfig").map(data => _.values(data))
-  // }
 }
 
+// Companion: code/ctl/src/main/kotlin/com/nojank/model/RedisConfig
 export interface Config {
+ ssn: String;
  url: string;
  usr: string;
  pwd: string;
