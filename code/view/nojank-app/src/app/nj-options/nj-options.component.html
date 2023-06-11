@@ -26,17 +26,17 @@
  <form *ngIf="opStateService.isCtlOverrideRedis" [formGroup]="configForm" (submit)="submitConfigForm()">
   <mat-form-field>
     <mat-label>URL</mat-label>
-    <input matInput #redisUrl placeholder=""/>
+    <input matInput #redisUrl placeholder="" [value]="opHttpService.boundConfig.url"/>
    </mat-form-field>
   <br/>
   <mat-form-field>
     <mat-label>User</mat-label>
-    <input matInput #redisUsr placeholder=""/>
+    <input matInput #redisUsr placeholder="" [value]="opHttpService.boundConfig.usr"/>
    </mat-form-field>
   <br/>
   <mat-form-field>
    <mat-label>Password</mat-label>
-   <input matInput #redisPwd placeholder=""/>
+   <input matInput #redisPwd placeholder="" [value]="opHttpService.boundConfig.pwd"/>
   </mat-form-field>
   <br/>
   <button mat-button color="primary"
