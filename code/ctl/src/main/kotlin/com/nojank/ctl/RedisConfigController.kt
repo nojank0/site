@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.RequestContextHolder
 
+@CrossOrigin(origins = ["http://localhost:4200", "https://nojank.com"])
 @RestController
 class RedisConfigController {
 
