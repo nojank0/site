@@ -1,19 +1,13 @@
 package com.nojank.ctl
 
 import com.nojank.model.RedisConfig
-import jakarta.servlet.ServletContext
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.RequestContextHolder
 
-@CrossOrigin(origins = ["http://localhost:4200", "https://nojank.com"])
 @RestController
 class RedisConfigController {
-
-    @Autowired
-    var context: ServletContext? = null
-
     val map = HashMap<String, RedisConfig>()
+
     @PostMapping
     fun newRedisConfig(@RequestBody redisConfig: RedisConfig) {
         map[RequestContextHolder.currentRequestAttributes().sessionId] = redisConfig

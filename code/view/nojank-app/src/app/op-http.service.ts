@@ -21,8 +21,12 @@ export class OpHttpService {
     };
 
     this.http.get<Config>(this.configURL, options)
-    .subscribe(config => {
+    .subscribe(
+      config => {
         this.boundConfig = config
+      },
+      error => {
+        this.boundConfig = {ssn: error.message, url: "", usr: "", pwd: ""}
       }
     )
   }
