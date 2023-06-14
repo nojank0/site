@@ -119,7 +119,7 @@ If you are hosting both on one:
 Move the server files to your home directory on the server:
 
 
-    scp -r server/* $USER@nj:/home/$USER/
+    scp -r server/sb/* $USER@nj:/home/$USER/
     ssh nj
 
 
@@ -127,10 +127,10 @@ On the server:
 
 
     sudo mkdir /etc/nojank
-    sudo chown <$USER> /etc/nojank
-    mv nojank.conf /etc/nojank/
-    sudo mv nojank.service /etc/systemd/system/
-    sudo systemctl enable nojank.service
+    sudo chown $USER /etc/nojank
+    mv njsb.conf /etc/nojank/
+    sudo mv njsb.service /etc/systemd/system/
+    sudo systemctl enable njsb.service
     sudo reboot 0
 
 

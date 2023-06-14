@@ -4,9 +4,9 @@ Description=Nojank Web Spring boot application
 [Service]
 User=$USER
 Type=simple
-ExecStart=/usr/bin/java -jar /home/${USER}/ctl.jar --spring.profiles.active=prod
+ExecStart=/usr/bin/java -jar -Dspring.profiles.active=prod /home/${USER}/ctl.jar
 SuccessExitStatus=143
-EnvironmentFile=/etc/nojank/nojank.conf
+EnvironmentFile=/etc/nojank/njsb.conf
 
 [Install]
 WantedBy=multi-user.target
