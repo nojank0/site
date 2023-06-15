@@ -26,7 +26,7 @@ export class OpHttpService {
         this.boundConfig = config
       },
       error => {
-        this.boundConfig = {ssn: error.message, url: "", usr: "", pwd: ""}
+        this.boundConfig = {ssn: error.message, env: "", url: "", usr: "", pwd: ""}
       }
     )
   }
@@ -35,6 +35,7 @@ export class OpHttpService {
 // Companion: code/ctl/src/main/kotlin/com/nojank/model/RedisConfig
 export interface Config {
  ssn: String;
+ env: String;
  url: string;
  usr: string;
  pwd: string;
