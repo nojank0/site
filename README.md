@@ -163,7 +163,7 @@ Finally, in /etc/nginx/sites-available/nojank.com, replace your
 
 with
 
-    location /getConfig {
+    location /ctl {
       proxy_pass http://localhost:8080;
     }
     location / {

@@ -14,9 +14,9 @@ export class OpHttpService {
 
   constructor(private http: HttpClient) {
    if (isDevMode()) {
-    this.configURL = "http://localhost:8080/getConfig"
+    this.configURL = "http://localhost:8080/ctl/getConfig"
    } else {
-    this.configURL = "https://nojank.com/getConfig"
+    this.configURL = "https://nojank.com/ctl/getConfig"
    }
   }
 

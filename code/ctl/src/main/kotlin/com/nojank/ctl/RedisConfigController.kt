@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.RequestContextHolder
 
 @RestController
+@RequestMapping(path = ["/ctl"])
 class RedisConfigController {
     val map = HashMap<String, RedisConfig>()
 
