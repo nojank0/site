@@ -9,7 +9,7 @@ import { catchError, retry } from 'rxjs/operators';
 
 export class OpHttpService {
 
-  configURL = "http://localhost:8080/getConfig"
+  configURL = "https://nojank.com/getConfig"
   boundConfig = <Config>{}
 
   constructor(private http: HttpClient) { }
@@ -26,7 +26,7 @@ export class OpHttpService {
         this.boundConfig = config
       },
       error => {
-        this.boundConfig = {ssn: error.message, env: "", url: "", usr: "", pwd: ""}
+        this.boundConfig = {ssn: error.message, env: "", url: this.configURL, usr: "", pwd: ""}
       }
     )
   }

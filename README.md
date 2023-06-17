@@ -186,6 +186,12 @@ where
 * NJRCP is the default Redis cache [password](https://cwiki.apache.org/confluence/display/TOMCAT/Password).
 
 
+# Troubleshooting
+
+From the server, to see Spring boot logs:
+
+    sudo journalctl -u njsb.service
+
 # Further reading
 
 * [Design considerations.](./docs/design.md)

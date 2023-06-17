@@ -1,12 +1,17 @@
 package com.nojank.ctl
 
 import com.nojank.model.RedisConfig
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.env.Environment
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.RequestContextHolder
 
 @RestController
 class RedisConfigController {
     val map = HashMap<String, RedisConfig>()
+
+    @Autowired
+    var env: Environment? = null
 
     @PostMapping
     fun newRedisConfig(@RequestBody redisConfig: RedisConfig) {
@@ -18,7 +23,7 @@ class RedisConfigController {
     fun getRedisConfig(): RedisConfig {
         val sessionId = RequestContextHolder.currentRequestAttributes().sessionId
         return map[sessionId]
-            ?: RedisConfig(sessionId, "durl", "dusr", "dpwd")
+            ?: RedisConfig(sessionId, getCurrentProfile(env), "durl", "dusr", "dpwd")
     }
     @GetMapping("/test")
     fun test(): String {
