@@ -28,13 +28,12 @@ fun getCurrentProfile(env: Environment?): String {
     var currentProfile = "Undefined"
     if (env != null) {
         var activeProfiles = env.activeProfiles
-        if (activeProfiles.isNullOrEmpty()) {
+        if (activeProfiles.isEmpty()) {
             activeProfiles = env.defaultProfiles
         }
-        if (!activeProfiles.isNullOrEmpty()) {
+        if (activeProfiles.isNotEmpty()) {
             currentProfile = activeProfiles[0].toString()
         }
     }
     return currentProfile
 }
-
