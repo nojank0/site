@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit, isDevMode } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -9,24 +9,29 @@ import { catchError, retry } from 'rxjs/operators';
 
 export class OpHttpService {
 
-  configURL = "https://nojank.com/getConfig"
+  configURL = ""
   boundConfig = <Config>{}
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+   if (isDevMode()) {
+    this.configURL = "http://localhost:8080/getConfig"
+   } else {
+    this.configURL = "https://nojank.com/getConfig"
+   }
+  }
 
   getConfig() {
     let options = {
       headers: new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
     };
-
     this.http.get<Config>(this.configURL, options)
     .subscribe(
       config => {
         this.boundConfig = config
       },
       error => {
-        this.boundConfig = {ssn: error.message, env: "", url: this.configURL, usr: "", pwd: ""}
+        this.boundConfig = {ssn: error.message, env: "Error 530", url: this.configURL, usr: "", pwd: ""}
       }
     )
   }

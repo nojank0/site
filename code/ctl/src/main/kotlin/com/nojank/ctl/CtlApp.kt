@@ -9,7 +9,7 @@ import org.springframework.core.env.Environment
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
-const val NJAO_KEY = "njao"
+const val ALLOWED_ORIGIN_KEY = "njao"
 
 @SpringBootApplication
 class CtlApp {
@@ -23,13 +23,13 @@ class CtlApp {
 	fun corsConfigurer(): WebMvcConfigurer? {
 		return object : WebMvcConfigurer {
 			override fun addCorsMappings(registry: CorsRegistry) {
-				log.info("Environment 9772sx is:  ${getCurrentProfile(env)}")
-				val njao = env?.getProperty(NJAO_KEY) ?: ""
-				if (njao.isNullOrEmpty()) {
-					log.error("Unable to load environment property $NJAO_KEY.")
+				log.info("Environment is:  ${getCurrentProfile(env)}")
+				val allowedOrigin = env?.getProperty(ALLOWED_ORIGIN_KEY) ?: ""
+				if (allowedOrigin.isEmpty()) {
+					log.error("Unable to load environment property $ALLOWED_ORIGIN_KEY.")
 				} else {
-					log.info("Registering CORS allowed origin $njao")
-					registry.addMapping("/**").allowedOrigins(njao)
+					log.info("Registering CORS allowed origin $allowedOrigin")
+					registry.addMapping("/**").allowedOrigins(allowedOrigin)
 				}
 			}
 		}

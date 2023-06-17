@@ -59,6 +59,7 @@ Append to the end of ~/.profile:
     export NJSBD=
     export NJSBH=nj
     export NJSBU=$USER
+    export NJSBP=
     export NJSBD=
     #Include the following on the springboot server, as well as your workstation:
     export NJRHOST=
@@ -69,6 +70,7 @@ Append to the end of ~/.profile:
 * NJNGU is your Nojank Angular server user.
 * NJSBH is your Nojank Spring Boot server, as defined in ~/.ssh/config.
 * NJSBU is your Nojank Spring Boot server user.
+* NJSBP is your Nojank Spring Boot server user password.
 * NJSBD is the domain name. If not on server blocks, leave it blank.
 * NJRHOST is the default Redis host URL.
 * NJRUSR is the default Redis user id.
@@ -161,12 +163,11 @@ Finally, in /etc/nginx/sites-available/nojank.com, replace your
 
 with
 
-
+    location /getConfig {
+      proxy_pass http://localhost:8080;
+    }
     location / {
      try_files $uri $uri/ /index.html;
-    }
-    location /s {
-     proxy_pass http://127.0.0.1:8080;
     }
 
 ... and reboot.

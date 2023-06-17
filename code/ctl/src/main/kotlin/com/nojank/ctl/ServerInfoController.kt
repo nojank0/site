@@ -27,9 +27,9 @@ class ServerInfoController {
 fun getCurrentProfile(env: Environment?): String {
     var currentProfile = "Undefined"
     if (env != null) {
-        var activeProfiles = env?.activeProfiles
+        var activeProfiles = env.activeProfiles
         if (activeProfiles.isNullOrEmpty()) {
-            activeProfiles = env?.defaultProfiles
+            activeProfiles = env.defaultProfiles
         }
         if (!activeProfiles.isNullOrEmpty()) {
             currentProfile = activeProfiles[0].toString()
