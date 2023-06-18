@@ -20,7 +20,7 @@ class RedisConfigController {
     }
 
     @CrossOrigin
-    @GetMapping("/getConfig")
+    @GetMapping("/getRedisConfig")
     fun getRedisConfig(): RedisConfig {
         val sessionId = RequestContextHolder.currentRequestAttributes().sessionId
         return map[sessionId]
