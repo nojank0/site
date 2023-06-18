@@ -9,14 +9,14 @@ import { catchError, retry } from 'rxjs/operators';
 
 export class OpHttpService {
 
-  configURL = ""
+  baseURL = ""
   boundConfig = <Config>{}
 
   constructor(private http: HttpClient) {
    if (isDevMode()) {
-    this.configURL = "http://localhost:8080/ctl/getConfig"
+    this.baseURL = "http://localhost:8080/ctl"
    } else {
-    this.configURL = "https://nojank.com/ctl/getConfig"
+    this.baseURL = "https://nojank.com/ctl"
    }
   }
 
@@ -25,13 +25,13 @@ export class OpHttpService {
       headers: new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
     };
-    this.http.get<Config>(this.configURL, options)
+    this.http.get<Config>(this.baseURL + "/getConfig", options)
     .subscribe(
       config => {
         this.boundConfig = config
       },
       error => {
-        this.boundConfig = {ssn: error.message, env: "Error 530", url: this.configURL, usr: "", pwd: ""}
+        this.boundConfig = {ssn: error.message, env: "Error 530", url: this.baseURL, usr: "", pwd: ""}
       }
     )
   }
