@@ -10,7 +10,7 @@ import { catchError, retry } from 'rxjs/operators';
 export class OpHttpService {
 
   baseURL = ""
-  boundConfig = <Config>{}
+  boundConfig = <RedisConfig>{}
 
   constructor(private http: HttpClient) {
    if (isDevMode()) {
@@ -25,7 +25,7 @@ export class OpHttpService {
       headers: new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
     };
-    this.http.get<Config>(this.baseURL + "/getConfig", options)
+    this.http.get<RedisConfig>(this.baseURL + "/getConfig", options)
     .subscribe(
       config => {
         this.boundConfig = config
@@ -38,7 +38,7 @@ export class OpHttpService {
 }
 
 // Companion: code/ctl/src/main/kotlin/com/nojank/model/RedisConfig
-export interface Config {
+export interface RedisConfig {
  ssn: String;
  env: String;
  url: string;
