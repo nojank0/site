@@ -41,7 +41,7 @@ export class OpHttpService {
 export interface RedisConfig {
  ssn: String;
  env: String;
- url: string;
- usr: string;
- pwd: string;
+ url: String;
+ usr: String;
+ pwd: String;
 }
