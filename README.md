@@ -161,9 +161,22 @@ Finally, in /etc/nginx/sites-available/nojank.com, replace your
     }
 
 
-with
+[with](https://stackoverflow.com/questions/32107901)
 
-    location /ctl {
+    map ":$http_x_forwarded_for" $IP_ADDR {
+      ":" $remote_addr;
+      default $http_x_forwarded_for;
+    }
+
+    location /ip {
+      default_type text/plain;
+      return 200 "$IP_ADDR"
+    }
+    location /ipf {
+      default_type text/plain;
+      return 200 "$remote_addr"
+    }
+    location /ct {
       proxy_pass http://localhost:8080;
     }
     location / {

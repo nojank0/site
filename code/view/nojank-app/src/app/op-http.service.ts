@@ -10,42 +10,53 @@ import { catchError, retry } from 'rxjs/operators';
 export class OpHttpService {
 
   baseURL = ""
-  boundConfig = <RedisConfig>{}
+  boundSessionConfig = <SessionConfig>{}
+
+
   errorMessage = ""
   sessionCount = ""
 
   constructor(private http: HttpClient) {
    if (isDevMode()) {
-    this.baseURL = "http://localhost:8080/ctl"
+    this.baseURL = "http://localhost:8080/ct"
    } else {
-    this.baseURL = "https://nojank.com/ctl"
+    this.baseURL = "https://nojank.com/ct"
    }
   }
 
-  getConfig() {
+  getSessionConfig() {
+    console.log('getting session config.')
     let options = {
       headers: new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
     };
-    this.http.get<RedisConfig>(this.baseURL + "/getRedisConfig", options)
+    this.http.get<SessionConfig>(this.baseURL + "/getSessionConfig", options)
     .subscribe(
-      config => {
-        this.boundConfig = config
+      sessionConfig => {
+        this.boundSessionConfig = sessionConfig
       },
       error => {
-        this.boundConfig = {ssn: "Controller server is down, please try refreshing this page later.", env: "", url: "", usr: "", pwd: ""}
+        this.boundSessionConfig = {ssn: "Controller server is down, please try refreshing this page later.", ipa: "", env: "", url: "", usr: "", pwd: ""}
       }
     )
+    // TODO: This seems separate?
     this.http.get<string>(this.baseURL + "/getSessionCount", options)
     .subscribe(
      sessionCount => {
       this.sessionCount = sessionCount
      }
     )
+
+    this.http.get<string>(this.baseURL + "/ip", options)
+    .subscribe(
+     ipa => {
+      this.boundSessionConfig.ipa = ipa
+     }
+    )
   }
 
-  putConfig() {
-    this.http.put<any>(this.baseURL + "/putRedisConfig", this.boundConfig)
+  putSessionConfig() {
+    this.http.put<any>(this.baseURL + "/putSessionConfig", this.boundSessionConfig)
     .subscribe(
       data => {
       },
@@ -59,19 +70,18 @@ export class OpHttpService {
   return "foo"
  }
 
- submitRedisForm(redisUrl: string, redisUsr: string, redisPwd: string) {
-  this.boundConfig.url = redisUrl
-  this.boundConfig.usr = redisUsr
-  this.boundConfig.pwd = redisPwd
-  this.putConfig()
+ submitSessionConfigForm(redisUrl: string, redisUsr: string, redisPwd: string) {
+  this.boundSessionConfig.url = redisUrl
+  this.boundSessionConfig.usr = redisUsr
+  this.boundSessionConfig.pwd = redisPwd
+  this.putSessionConfig()
  }
-
-
 }
 
-// Companion: code/ctl/src/main/kotlin/com/nojank/model/RedisConfig
-export interface RedisConfig {
+// Companion: code/ctl/src/main/kotlin/com/nojank/model/SessionConfig
+export interface SessionConfig {
  ssn: String;
+ ipa: String;
  env: String;
  url: String;
  usr: String;

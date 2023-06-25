@@ -6,12 +6,8 @@ import { ChangeDetectorRef } from '@angular/core';
 import { OpThemeService } from '../op-theme.service';
 import { OpRedisService } from '../op-redis.service';
 import { OpStateService } from '../op-state.service';
-
-// Make this into a service later.
-//import { HttpClient } from '@angular/common/http';
-
-import * as njg from '../globals';
 import { OpHttpService } from '../op-http.service';
+import * as njg from '../globals';
 
 @Component({
  selector: 'app-nj-config',
@@ -43,7 +39,7 @@ export class NjOptionsComponent {
    this.opHttpService = opHttpService
    opThemeService.updateTheme(document)
    this.ref.markForCheck();
-   this.opHttpService.getConfig()
+   this.opHttpService.getSessionConfig()
  }
 
  onChangeCtlTheme(value: boolean) {

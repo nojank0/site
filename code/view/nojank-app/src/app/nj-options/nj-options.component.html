@@ -13,9 +13,10 @@
     cache used by this site:
   </p>
 
-  <p>Your Session ID is <b><span [innerText]="opHttpService.boundConfig.ssn"></span></b></p>
-  <p>Your back-end URL is  <span [innerText]="opHttpService.boundConfig.url"></span></p>
-  <p>Your environment is <span [innerText]="opHttpService.boundConfig.env"></span></p>
+  <p>Your Session ID is <b><span [innerText]="opHttpService.boundSessionConfig.ssn"></span></b></p>
+  <p>Your IP address is <b><span [innerText]="opHttpService.boundSessionConfig.ipa"></span></b></p>
+  <p>Your back-end URL is  <span [innerText]="opHttpService.boundSessionConfig.url"></span></p>
+  <p>Your environment is <span [innerText]="opHttpService.boundSessionConfig.env"></span></p>
   <p>This server is managing <span [innerText]="opHttpService.sessionCount"></span> sessions.</p>
 
   <p>
@@ -29,26 +30,26 @@
  <form *ngIf="opStateService.isCtlOverrideRedis" [formGroup]="configForm" (submit)="submitConfigForm()">
   <mat-form-field>
     <mat-label>URL</mat-label>
-    <input matInput #redisUrl placeholder="" [value]="opHttpService.boundConfig.url"/>
+    <input matInput #redisUrl placeholder="" [value]="opHttpService.boundSessionConfig.url"/>
    </mat-form-field>
   <br/>
   <mat-form-field>
     <mat-label>User</mat-label>
-    <input matInput #redisUsr placeholder="" [value]="opHttpService.boundConfig.usr"/>
+    <input matInput #redisUsr placeholder="" [value]="opHttpService.boundSessionConfig.usr"/>
    </mat-form-field>
   <br/>
   <mat-form-field>
    <mat-label>Password</mat-label>
-   <input matInput #redisPwd placeholder="" [value]="opHttpService.boundConfig.pwd"/>
+   <input matInput #redisPwd placeholder="" [value]="opHttpService.boundSessionConfig.pwd"/>
   </mat-form-field>
   <br/>
   <button mat-button color="primary"
-  (click)="opHttpService.submitRedisForm(redisUrl.value, redisUsr.value, redisPwd.value)">OK</button>
+  (click)="opHttpService.submitSessionConfigForm(redisUrl.value, redisUsr.value, redisPwd.value)">OK</button>
   <span [innerText]="opHttpService.errorMessage"></span>
  </form>
 
  <p>
-  As an additional precaution, you may choose to build your own 
+  As an additional precaution, you may choose to build your own
    <a mat-button color="primary" href="https://github.com/nojank0/site">mirror</a>
   of nojank.com.
  </p>
