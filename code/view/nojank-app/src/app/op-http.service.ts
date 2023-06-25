@@ -33,7 +33,7 @@ export class OpHttpService {
         this.boundConfig = config
       },
       error => {
-        this.boundConfig = {ssn: error.message, env: "Error 530", url: this.baseURL, usr: "", pwd: ""}
+        this.boundConfig = {ssn: "Controller server is down, please try refreshing this page later.", env: "", url: "", usr: "", pwd: ""}
       }
     )
     this.http.get<string>(this.baseURL + "/getSessionCount", options)
@@ -48,7 +48,6 @@ export class OpHttpService {
     this.http.put<any>(this.baseURL + "/putRedisConfig", this.boundConfig)
     .subscribe(
       data => {
-         
       },
       error => {
         this.errorMessage = error.message;
