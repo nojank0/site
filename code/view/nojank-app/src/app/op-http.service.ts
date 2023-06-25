@@ -11,6 +11,8 @@ export class OpHttpService {
 
   baseURL = ""
   boundConfig = <RedisConfig>{}
+  errorMessage = ""
+  sessionCount = ""
 
   constructor(private http: HttpClient) {
    if (isDevMode()) {
@@ -34,7 +36,38 @@ export class OpHttpService {
         this.boundConfig = {ssn: error.message, env: "Error 530", url: this.baseURL, usr: "", pwd: ""}
       }
     )
+    this.http.get<string>(this.baseURL + "/getSessionCount", options)
+    .subscribe(
+     sessionCount => {
+      this.sessionCount = sessionCount
+     }
+    )
   }
+
+  putConfig() {
+    this.http.put<any>(this.baseURL + "/putRedisConfig", this.boundConfig)
+    .subscribe(
+      data => {
+         
+      },
+      error => {
+        this.errorMessage = error.message;
+      }
+    )
+  }
+
+ getSessionCount(): String {
+  return "foo"
+ }
+
+ submitRedisForm(redisUrl: string, redisUsr: string, redisPwd: string) {
+  this.boundConfig.url = redisUrl
+  this.boundConfig.usr = redisUsr
+  this.boundConfig.pwd = redisPwd
+  this.putConfig()
+ }
+
+
 }
 
 // Companion: code/ctl/src/main/kotlin/com/nojank/model/RedisConfig

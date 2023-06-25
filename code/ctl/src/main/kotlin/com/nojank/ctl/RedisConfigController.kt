@@ -1,6 +1,7 @@
 package com.nojank.ctl
 
 import com.nojank.model.RedisConfig
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
 import org.springframework.web.bind.annotation.*
@@ -14,19 +15,25 @@ class RedisConfigController {
     @Autowired
     var env: Environment? = null
 
-    @PostMapping
-    fun newRedisConfig(@RequestBody redisConfig: RedisConfig) {
-        map[RequestContextHolder.currentRequestAttributes().sessionId] = redisConfig
+    @PutMapping("/putRedisConfig")
+    fun updateRedisConfig(@RequestBody redisConfig: RedisConfig, request: HttpServletRequest) {
+        val sessionId = assembleSessionId(request)
+        map[sessionId] = redisConfig
     }
 
     @GetMapping("/getRedisConfig")
-    fun getRedisConfig(): RedisConfig {
-        val sessionId = RequestContextHolder.currentRequestAttributes().sessionId
+    fun getRedisConfig(request: HttpServletRequest): RedisConfig {
+        val sessionId = assembleSessionId(request)
         return map[sessionId]
             ?: RedisConfig(sessionId, getCurrentProfile(env), "durl", "dusr", "dpwd")
     }
-    @GetMapping("/test")
+
+    @GetMapping("/getSessionCount")
     fun test(): String {
-        return "foo"
+        return "${map.size}"
     }
+}
+
+private fun assembleSessionId(request: HttpServletRequest): String {
+    return "${RequestContextHolder.currentRequestAttributes().sessionId}${request.remoteAddr}"
 }

@@ -13,9 +13,10 @@
     cache used by this site:
   </p>
 
-  <p>Your Session ID is <span [innerText]="opHttpService.boundConfig.ssn"></span></p>
+  <p>Your Session ID is <b><span [innerText]="opHttpService.boundConfig.ssn"></span></b></p>
   <p>Your back-end URL is  <span [innerText]="opHttpService.boundConfig.url"></span></p>
   <p>Your environment is <span [innerText]="opHttpService.boundConfig.env"></span></p>
+  <p>This server is managing <span [innerText]="opHttpService.sessionCount"></span> sessions.</p>
 
   <p>
    <mat-slide-toggle [checked]="opStateService.isCtlOverrideRedis" (change)="onChangeCtlOverrideRedis($event.checked)">{{opRedisService.redisCacheChoiceLabel}}</mat-slide-toggle>
@@ -42,11 +43,13 @@
   </mat-form-field>
   <br/>
   <button mat-button color="primary"
-  (click)="opRedisService.submitRedisForm(redisUrl.value, redisUsr.value, redisPwd.value)">OK</button>
+  (click)="opHttpService.submitRedisForm(redisUrl.value, redisUsr.value, redisPwd.value)">OK</button>
+  <span [innerText]="opHttpService.errorMessage"></span>
  </form>
 
  <p>
-  As an additional precaution, you may choose to
+  As an additional precaution, you may choose to build your own 
    <a mat-button color="primary" href="https://github.com/nojank0/site">mirror</a>
+  of nojank.com.
  </p>
 </div>

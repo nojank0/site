@@ -11,3 +11,4 @@ export class OpStateService {
  public redisUsr = ''
  public redisPwd = ''
 }
+

@@ -3,6 +3,7 @@ import { Inject }  from '@angular/core'
 import { DOCUMENT } from '@angular/common'
 import { NjOptionsComponent } from './nj-options/nj-options.component';
 import { OpStateService } from './op-state.service';
+import { OpHttpService } from './op-http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +16,16 @@ export class OpRedisService {
  USE_YOUR_OWN = 'Use your own Redis cache.'
  USE_DEFAULT = 'Use default Redis cache.'
  opStateService: OpStateService
+ opHttpService: OpHttpService
  redisCacheChoiceLabel: string = this.USE_YOUR_OWN
  redisCacheInUseLabel: string = this.DEFAULT_IN_USE
 
 
  constructor(@Inject(DOCUMENT) private doc: Document,
- @Inject(OpStateService) opStateService: OpStateService) {
+ @Inject(OpStateService) opStateService: OpStateService,
+  @Inject(OpHttpService) opHttpService: OpHttpService,) {
   this.opStateService = opStateService
- }
-
- submitRedisForm(redisUrl: string, redisUsr: string, redisPwd: string) {
-  this.opStateService.redisUrl = redisUrl
-  this.opStateService.redisUsr = redisUsr
-  this.opStateService.redisPwd = redisPwd
+  this.opHttpService = opHttpService
  }
 
  reportChangeCtlOverrideRedis(value: boolean) {
