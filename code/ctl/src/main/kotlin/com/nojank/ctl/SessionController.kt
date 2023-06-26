@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
 import org.springframework.web.bind.annotation.*
+import java.net.Socket
 
 
 @RestController
@@ -31,5 +32,14 @@ class SessionController {
     @GetMapping("/getSessionCount")
     fun getSessionCount(): String {
         return "${map.size}"
+    }
+
+    /**
+     * Only called in local test environments. On a production server, this would be intercepted by nginx to return the
+     * client ip.
+     */
+    @GetMapping("/ip")
+    fun getIp(): String {
+        return "{\"ip\":\"${Socket().localAddress.hostAddress}\"}"
     }
 }

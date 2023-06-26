@@ -10,6 +10,8 @@ import { catchError, retry } from 'rxjs/operators';
 export class OpHttpService {
 
   baseURL = ""
+  ctPath = "/ct"
+  ipPath = ""
   boundSessionConfig = <SessionConfig>{}
 
 
@@ -18,9 +20,11 @@ export class OpHttpService {
 
   constructor(private http: HttpClient) {
    if (isDevMode()) {
-    this.baseURL = "http://localhost:8080/ct"
+    this.baseURL = "http://localhost:8080"
+    this.ipPath = "/ct/ip"
    } else {
-    this.baseURL = "https://nojank.com/ct"
+    this.baseURL = "https://nojank.com"
+    this.ipPath = "/ip"
    }
   }
 
@@ -30,33 +34,32 @@ export class OpHttpService {
       headers: new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
     };
-    this.http.get<SessionConfig>(this.baseURL + "/getSessionConfig", options)
+    this.http.get<SessionConfig>(this.baseURL + this.ctPath + "/getSessionConfig", options)
     .subscribe(
       sessionConfig => {
-        this.boundSessionConfig = sessionConfig
+        this.boundSessionConfig.ssn = sessionConfig.ssn
+        this.boundSessionConfig.env = sessionConfig.env
+        this.boundSessionConfig.url = sessionConfig.url
+        this.boundSessionConfig.usr = sessionConfig.usr
+        this.boundSessionConfig.pwd = sessionConfig.pwd
       },
       error => {
         this.boundSessionConfig = {ssn: "Controller server is down, please try refreshing this page later.", ipa: "", env: "", url: "", usr: "", pwd: ""}
       }
     )
-    // TODO: This seems separate?
-    this.http.get<string>(this.baseURL + "/getSessionCount", options)
-    .subscribe(
-     sessionCount => {
-      this.sessionCount = sessionCount
-     }
-    )
 
-    this.http.get<string>(this.baseURL + "/ip", options)
+    this.http.get<Ip>(this.baseURL + this.ipPath, options)
     .subscribe(
-     ipa => {
-      this.boundSessionConfig.ipa = ipa
+     ip => {
+      this.boundSessionConfig.ipa = ip.ip
+      console.log("yyy ip is " + this.boundSessionConfig.ipa)
      }
     )
+    console.log('Finished getting session config.')
   }
 
   putSessionConfig() {
-    this.http.put<any>(this.baseURL + "/putSessionConfig", this.boundSessionConfig)
+    this.http.put<any>(this.baseURL + this.ctPath + "/putSessionConfig", this.boundSessionConfig)
     .subscribe(
       data => {
       },
@@ -65,10 +68,6 @@ export class OpHttpService {
       }
     )
   }
-
- getSessionCount(): String {
-  return "foo"
- }
 
  submitSessionConfigForm(redisUrl: string, redisUsr: string, redisPwd: string) {
   this.boundSessionConfig.url = redisUrl
@@ -80,10 +79,14 @@ export class OpHttpService {
 
 // Companion: code/ctl/src/main/kotlin/com/nojank/model/SessionConfig
 export interface SessionConfig {
- ssn: String;
- ipa: String;
- env: String;
- url: String;
- usr: String;
- pwd: String;
+ ssn: String
+ ipa: String
+ env: String
+ url: String
+ usr: String
+ pwd: String
+}
+
+export interface Ip {
+ ip: String
 }
