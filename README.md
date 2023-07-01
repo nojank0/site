@@ -78,10 +78,14 @@ Append to the end of ~/.profile:
 
 NJNGH and NJSBH can be the same servers, as shown in the above example.
 
-
-
 If your server user names are different than your workstation user name, you will need to replace $USER above with
 hard coded values.
+
+... also make sure your JAVA_HOME is set, something like this on linux mint systems:
+
+
+    export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
+
 
 # Server requirements
 
