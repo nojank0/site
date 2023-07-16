@@ -1,4 +1,5 @@
 pushd ./code/view/nojank-app
+npm install npm@latest
 npm install
 ng update
 npm audit fix

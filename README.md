@@ -9,8 +9,13 @@ Follow these steps to create a mirror of [nojank.com](https://nojank.com).
 
 # Setup
 
+You may skip onetime.sh if Angular is already installed:
 
+    git config --global user.name "Your Name"
+    git config --global user.email your.email
+    git config --list
     chmod +x *.sh
+    ./onetime.sh
     ./setup.sh
 
 
@@ -29,6 +34,7 @@ Answer the material questions as follows:
 
 
     ./runsb.sh
+     runsb.cmd
 
 
 
