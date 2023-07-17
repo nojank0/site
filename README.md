@@ -44,10 +44,17 @@ Answer the material questions as follows:
     ./runng.sh
 
 
-# Deploy
+# Deploy from Linux workstation
 
 
+    ./buildsb.sh
+    ./deploy.sh
 
+
+# Deploy from Windows workstation
+
+
+    buildsb.cmd
     ./deploy.sh
 
 

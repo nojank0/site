@@ -25,8 +25,12 @@ class SessionController {
     @GetMapping("/getSessionConfig")
     fun getSessionConfig(request: HttpServletRequest): SessionConfig {
         val sessionPack = assembleSessionPack(request)
+
+
+        val redisURL: String = System.getenv("NJRHOST") ?: "NJRHOST undefined, server not configured."
+
         return map[sessionPack.key()]
-            ?: SessionConfig(sessionPack.ssn, sessionPack.ipa, getCurrentProfile(env), "", "", "")
+            ?: SessionConfig(sessionPack.ssn, sessionPack.ipa, getCurrentProfile(env), redisURL, "", "")
     }
 
     @GetMapping("/getSessionCount")

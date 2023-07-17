@@ -42,6 +42,7 @@ export class OpHttpService {
         this.boundSessionConfig.url = sessionConfig.url
         this.boundSessionConfig.usr = sessionConfig.usr
         this.boundSessionConfig.pwd = sessionConfig.pwd
+        console.log('Redis cache URL is: ' + this.boundSessionConfig.url)
       },
       error => {
         this.boundSessionConfig = {ssn: "Controller server is down, please try refreshing this page later.", ipa: "", env: "", url: "", usr: "", pwd: ""}
