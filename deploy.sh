@@ -4,5 +4,4 @@ set -o pipefail
 ./setup.sh
 ./deploysb.sh
 ./deployng.sh
-echo $NJSBP | ssh -tt $USER@$NJSBH "sudo reboot 0"
-
+echo $NJPWD | ssh -tt $NJUSR@$NJHOS "sudo reboot 0"

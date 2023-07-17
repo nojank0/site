@@ -27,10 +27,9 @@ class SessionController {
         val sessionPack = assembleSessionPack(request)
 
 
-        val redisURL: String = System.getenv("NJRHOST") ?: "NJRHOST undefined, server not configured."
 
         return map[sessionPack.key()]
-            ?: SessionConfig(sessionPack.ssn, sessionPack.ipa, getCurrentProfile(env), redisURL, "", "")
+            ?: SessionConfig(sessionPack.ssn, sessionPack.ipa, getCurrentProfile(env), njrurl, njrusr, njrpwd)
     }
 
     @GetMapping("/getSessionCount")
@@ -45,5 +44,13 @@ class SessionController {
     @GetMapping("/ip")
     fun getIp(): String {
         return "{\"ip\":\"${Socket().localAddress.hostAddress}\"}"
+    }
+
+    private val njrurl = getEnvOrProp(NJRURL)
+    private val njrusr = getEnvOrProp(NJRUSR)
+    private val njrpwd = getEnvOrProp(NJRPWD)
+
+    private fun getEnvOrProp(key: String): String {
+        return System.getenv(key) ?: env?.getProperty(key) ?: "$key undefined on this system."
     }
 }

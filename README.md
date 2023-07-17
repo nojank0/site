@@ -1,10 +1,55 @@
 # [NoJank](https://nojank.com)
 
 
-While you can configure nojank.com to use your own [Redis](https://redis.io) cache, to provide full control over availability and source transparency, you would create your own mirror.
+To provide maximum flexibility and ease of use, NoJank is configurable at both the server and user level.
 
+To provide full control over availability and source transparency, you would create your own mirror.
+
+At the server level, there is a default [Redis](https://redis.io) cache, 
+as you can see in [njsb.service](https://github.com/nojank0/site/blob/main/server/sb/njsb.service), njsb.conf is defined as the environment variable file at production runtime.
+
+Linux (and mac) developers may, and should, deploy the file on their workstation in the same way, 
+but Windows developers will need to define them as environment variables either at the system level or
+as launch parameters, for example after the active spring profile definition as shown here:
+
+    -Dspring.profiles.active=dev
 
 Follow these steps to create a mirror of [nojank.com](https://nojank.com).
+
+
+Your Redis configuration variables will be overridden in production by values you define in:
+
+
+
+    /etc/nojank/njsb.conf
+
+
+where you would assign these values:
+
+
+    NJRUSR=prodRedisUser
+    NJRHOS=prodRedisHost
+    NJRPWD=prodRedisPassword
+
+
+
+[Reference](https://cwiki.apache.org/confluence/display/TOMCAT/Password)
+
+
+Edit $USER/.profile and add
+
+
+    export NJRCU=
+    export NJRCP=
+
+
+where
+
+
+* NJRCU is the default Redis cache user name.
+* NJRCP is the default Redis cache [password](https://cwiki.apache.org/confluence/display/TOMCAT/Password).
+
+
 
 
 # Setup
@@ -62,42 +107,37 @@ Answer the material questions as follows:
 
 Please define these system environment variables on your workstation, so that the deployment script will work.
 
-Make adjustments for your workstation, this was done on a Linux Mint system.
 
-Append to the end of ~/.profile:
-    
+Append to the end of ~/.profile, something like this, make adjustments as needed:
 
-    export NJNGH=nj
-    export NJNGU=$USER
-    export NJSBD=
-    export NJSBH=nj
-    export NJSBU=$USER
-    export NJSBP=
-    export NJSBD=
-    #Include the following on the springboot server, as well as your workstation:
-    export NJRHOST=
-    export NJRUSR=
-    export NJRPWD=
 
-* NJNGH is your Nojank Angular server (aka host), as defined in your workstation ~/.ssh/config file.
-* NJNGU is your Nojank Angular server user.
-* NJSBH is your Nojank Spring Boot server, as defined in ~/.ssh/config.
-* NJSBU is your Nojank Spring Boot server user.
-* NJSBP is your Nojank Spring Boot server user password.
-* NJSBD is the domain name. If not on server blocks, leave it blank.
-* NJRHOST is the default Redis host URL.
-* NJRUSR is the default Redis user id.
-* NJRPWD is the default Redis password.
+    export NJDMN=default
+    export NJHOS=nj
+    export NJUSR=$USER
+    export NJPWD=pwd
 
-NJNGH and NJSBH can be the same servers, as shown in the above example.
 
-If your server user names are different than your workstation user name, you will need to replace $USER above with
-hard coded values.
+
+* NJDMN is your NoJank domain name.
+* NJHOS is your NoJank server (aka host), as defined in your workstation ~/.ssh/config file.
+* NJUSR is your NoJank server user.
+* NJPWD is your NoJank server password.  Needed in deploy.sh, to reboot the server.
+
+
+
+If your server user name is different than your workstation user name, 
+you will need to replace $USER above with a hard coded value.
 
 ... also make sure your JAVA_HOME is set, something like this on linux mint systems:
 
 
     export JAVA_HOME=/usr/lib/jvm/temurin-17-jdk-amd64
+
+
+... and on Windows systems you might need something like this:
+
+
+    export PATH="$PATH:$HOME/Documents/apps/ng/node"
 
 
 # Server requirements
@@ -201,21 +241,6 @@ Finally, in /etc/nginx/sites-available/nojank.com, replace your
     }
 
 ... and reboot.
-
-
-Edit $USER/.profile and add
-
-
-    export NJRCU=
-    export NJRCP=
-
-
-where
-
-
-* NJRCU is the default Redis cache user name.
-* NJRCP is the default Redis cache [password](https://cwiki.apache.org/confluence/display/TOMCAT/Password).
-
 
 # Troubleshooting
 

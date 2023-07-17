@@ -10,4 +10,3 @@ EnvironmentFile=/etc/nojank/njsb.conf
 
 [Install]
 WantedBy=multi-user.target
-
