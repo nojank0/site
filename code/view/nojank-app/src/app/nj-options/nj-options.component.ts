@@ -20,6 +20,7 @@ export class NjOptionsComponent {
  opThemeService: OpThemeService
  opRedisService: OpRedisService
  opHttpService: OpHttpService
+  show: boolean = false
 
  configForm = new FormGroup({
   redisUrl: new FormControl(''),
@@ -41,7 +42,9 @@ export class NjOptionsComponent {
    this.ref.markForCheck();
    this.opHttpService.getSessionConfig()
  }
-
+  password() {
+   // this.show = !this.show;
+  }
  onChangeCtlTheme(value: boolean) {
   this.opThemeService.reportChangeCtlTheme(this.doc, value)
  }

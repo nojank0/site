@@ -43,7 +43,8 @@
   <br/>
   <mat-form-field>
    <mat-label>Password</mat-label>
-   <input matInput #redisPwd placeholder="" [value]="opHttpService.boundSessionConfig.pwd"/>
+   <input matInput #redisPwd placeholder="" [value]="opHttpService.boundSessionConfig.pwd" [type]="show ? 'text' : 'password'"/>
+    <!--<button (click)="password()">{{show ? 'Show' : 'Hide'}}</button>-->
   </mat-form-field>
   <br/>
   <button mat-button color="primary"
